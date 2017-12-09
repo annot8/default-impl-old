@@ -27,9 +27,7 @@ public abstract class AbstractAnnotation implements Annotation{
 		this.id = id;
 	}
 	
-	/**
-	 * Return the ID assigned to this annotation
-	 */
+	@Override
 	public UUID getId() {
 		return id;
 	}

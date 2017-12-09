@@ -1,5 +1,6 @@
 package io.annot8.defaultimpl.annotations;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -48,116 +49,83 @@ public class SimpleSpan extends AbstractAnnotation implements Span{
 		this.type = type;
 	}
 	
-	/**
-	 * Return the Span type
-	 */
+	@Override
 	public Optional<String> getType() {
 		return Optional.ofNullable(type);
 	}
 
-	/**
-	 * Set the Span type
-	 */
+	@Override
 	public void setType(String type) {
 		this.type = type;
 	}
 
-	/**
-	 * Return the begin offset
-	 */
+	@Override
 	public int getBegin() {
 		return begin;
 	}
 
-	/**
-	 * Set the begin offset
-	 */
+	@Override
 	public void setBegin(int begin) {
 		this.begin = begin;
 	}
 
-	/**
-	 * Return the end offset
-	 */
+	@Override
 	public int getEnd() {
 		return end;
 	}
 
-	/**
-	 * Set the end offset
-	 */
+	@Override
 	public void setEnd(int end) {
 		this.end = end;
 	}
 	
-	/**
-	 * Returns true if the Span has a property with the given key
-	 */
+	@Override
 	public boolean hasProperty(String key) {
 		return properties.containsKey(key);
 	}
 
-	/**
-	 * Return the property value for the specified key
-	 */
+	@Override
 	public Optional<Object> getProperty(String key) {
 		return Optional.ofNullable(properties.get(key));
 	}
 	
-	/**
-	 * Return the property value for the specified key, or a default value if the key doesn't have a stored value
-	 */
+	@Override
 	public Object getPropertyOrDefault(String key, Object defaultValue) {
 		return properties.getOrDefault(key, defaultValue);
 	}
 
-	/**
-	 * Set the property value for the specified key
-	 */
+	@Override
 	public void setProperty(String key, Object value) {
 		properties.put(key, value);
 	}
 
-	/**
-	 * Remove the property for the specified key, and return it's object
-	 */
+	@Override
 	public Optional<Object> removeProperty(String key) {
 		return Optional.ofNullable(properties.remove(key));
 	}
 
-	/**
-	 * List the property keys currently set on this span
-	 */
+	@Override
 	public Set<String> listPropertyKeys() {
 		return properties.keySet();
 	}
 
-	/**
-	 * Return the underlying properties map
-	 */
+	@Override
 	public Map<String, Object> getProperties() {
 		return properties;
 	}
 
-	/**
-	 * Set the underlying properties map
-	 */
+	@Override
 	public void setProperties(Map<String, Object> properties) {
 		this.properties = properties;
 	}
 
-	/**
-	 * Add all properties from the given map to the existing map,
-	 * overwriting values where they clash.
-	 */
+	@Override
 	public void addProperties(Map<String, Object> properties) {
 		this.properties.putAll(properties);
 	}
 
-	/**
-	 * Remove all properties that match keys in the given set of keys
-	 */
-	public void removeProperties(Set<String> keys) {
+	@Override
+	public void removeProperties(Collection<String> keys) {
 		keys.forEach(s -> properties.remove(s));
 	}
 	

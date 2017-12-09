@@ -36,34 +36,22 @@ public class SimpleMetadata extends AbstractAnnotation implements Metadata {
 		this.value = value;
 	}
 	
-	/**
-	 * Get the key for this annotation
-	 */
+	@Override
 	public String getKey() {
 		return key;
 	}
-	/**
-	 * Set the key for this annotation
-	 * 
-	 * @param key
-	 * 		Metadata key
-	 */
+	
+	@Override
 	public void setKey(String key) {
 		this.key = key;
 	}
 
-	/**
-	 * Get the value for this annotation
-	 */
+	@Override
 	public Object getValue() {
 		return value;
 	}
-	/**
-	 * Set the value for this annotation
-	 * 
-	 * @param value
-	 * 		Metadata value
-	 */
+	
+	@Override
 	public void setValue(Object value) {
 		this.value = value;
 	}
