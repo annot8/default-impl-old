@@ -9,4 +9,12 @@ import io.annot8.core.annotations.Span;
  */
 public class SimpleMention extends SimpleSpan implements Mention{
 
+	@Override
+	public String toString() {
+		if(getType() != null) {
+			return "Mention ("+getType().get()+"; "+getBegin()+"->"+getEnd()+")";
+		}else {
+			return "Mention ("+getBegin()+"->"+getEnd()+")";
+		}
+	}
 }
