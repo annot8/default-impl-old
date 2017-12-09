@@ -25,19 +25,15 @@ public class SimpleSpanTest {
 		s1.setBegin(5);
 		s1.setEnd(10);
 		
-		Span s2 = new SimpleSpan("Test");
-		s2.setBegin(5);
-		s2.setEnd(10);
+		Span s2 = new SimpleSpan(5, 10);
+		s2.setType("Test");
 		
-		Span s3 = new SimpleSpan(5, 10);
-		s3.setType("Test");
+		Span s3 = new SimpleSpan(5, 10, "Test");
 		
-		Span s4 = new SimpleSpan("Test", 5, 10);
-		
-		List<Span> spans = Arrays.asList(s1, s2, s3, s4);
+		List<Span> spans = Arrays.asList(s1, s2, s3);
 		for(Span s : spans) {
 			assertNotNull(s.getId());
-			assertEquals("Test", s.getType());
+			assertEquals("Test", s.getType().get());
 			assertEquals(5, s.getBegin());
 			assertEquals(10, s.getEnd());
 			
@@ -47,13 +43,10 @@ public class SimpleSpanTest {
 		
 		assertNotEquals(s1.getId(), s2.getId());
 		assertNotEquals(s1.getId(), s3.getId());
-		assertNotEquals(s1.getId(), s4.getId());
-		
-		assertNotEquals(new SimpleSpan("Foo"), s1);
-		assertNotEquals(new SimpleSpan("Test"), s1);
+
 		assertNotEquals(new SimpleSpan(5, 10), s1);
-		assertNotEquals(new SimpleSpan("Test", 5, 20), s1);
-		assertNotEquals(new SimpleSpan("Test", 0, 10), s1);
+		assertNotEquals(new SimpleSpan(5, 20, "Test"), s1);
+		assertNotEquals(new SimpleSpan(0, 10, "Test"), s1);
 		assertFalse(s1.equals("Test"));
 		assertNotNull(s1.toString());
 	}
@@ -63,13 +56,14 @@ public class SimpleSpanTest {
 		Span s1 = new SimpleSpan();
 		
 		s1.setProperty("p1", Integer.valueOf(42));
-		assertEquals(42, s1.getProperty("p1"));
+		assertEquals(42, s1.getProperty("p1").get());
 		assertTrue(s1.hasProperty("p1"));
 		Set<String> keys = s1.listPropertyKeys();
 		assertEquals(1, keys.size());
 		assertTrue(keys.contains("p1"));
-		assertEquals(42, s1.removeProperty("p1"));
+		assertEquals(42, s1.removeProperty("p1").get());
 		assertFalse(s1.hasProperty("p1"));
+		assertFalse(s1.getProperty("p1").isPresent());
 		assertEquals(52, s1.getPropertyOrDefault("p1", Integer.valueOf(52)));
 		assertTrue(s1.listPropertyKeys().isEmpty());
 		

@@ -12,7 +12,12 @@ public class SimpleMetadata extends AbstractAnnotation implements Metadata {
 	private Object value;
 
 	/**
-	 * Default (empty) constructor
+	 * Default (empty) constructor)
+	 * 
+	 * Use of this constructor should be avoided, as it is expected that
+	 * they key and value will always be set.
+	 * This is intended only for use when the annotation is being created
+	 * via reflection.
 	 */
 	public SimpleMetadata() {
 		//Empty constructor

@@ -3,6 +3,7 @@ package io.annot8.defaultimpl.annotations;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import io.annot8.core.annotations.Span;
@@ -20,16 +21,14 @@ public class SimpleSpan extends AbstractAnnotation implements Span{
 	
 	/**
 	 * Default (empty) constructor)
+	 * 
+	 * Use of this constructor should be avoided, as it is expected that
+	 * as a minimum the begin and end values will always be set.
+	 * This is intended only for use when the annotation is being created
+	 * via reflection.
 	 */
 	public SimpleSpan() {
 		//Empty constructor
-	}
-	
-	/**
-	 * Construct a new annotation with the given type
-	 */
-	public SimpleSpan(String type) {
-		this.type = type;
 	}
 	
 	/**
@@ -43,17 +42,17 @@ public class SimpleSpan extends AbstractAnnotation implements Span{
 	/**
 	 * Construct a new annotation with the given type and offsets
 	 */
-	public SimpleSpan(String type, int begin, int end) {
-		this.type = type;
+	public SimpleSpan(int begin, int end, String type) {
 		this.begin = begin;
 		this.end = end;
+		this.type = type;
 	}
 	
 	/**
 	 * Return the Span type
 	 */
-	public String getType() {
-		return type;
+	public Optional<String> getType() {
+		return Optional.ofNullable(type);
 	}
 
 	/**
@@ -101,8 +100,8 @@ public class SimpleSpan extends AbstractAnnotation implements Span{
 	/**
 	 * Return the property value for the specified key
 	 */
-	public Object getProperty(String key) {
-		return properties.get(key);
+	public Optional<Object> getProperty(String key) {
+		return Optional.ofNullable(properties.get(key));
 	}
 	
 	/**
@@ -122,8 +121,8 @@ public class SimpleSpan extends AbstractAnnotation implements Span{
 	/**
 	 * Remove the property for the specified key, and return it's object
 	 */
-	public Object removeProperty(String key) {
-		return properties.remove(key);
+	public Optional<Object> removeProperty(String key) {
+		return Optional.ofNullable(properties.remove(key));
 	}
 
 	/**
@@ -164,7 +163,11 @@ public class SimpleSpan extends AbstractAnnotation implements Span{
 	
 	@Override
 	public String toString() {
-		return "Span ("+type+"; "+begin+"->"+end+")";
+		if(type != null) {
+			return "Span ("+type+"; "+begin+"->"+end+")";
+		}else {
+			return "Span ("+begin+"->"+end+")";
+		}
 	}
 	
 	@Override
@@ -173,7 +176,7 @@ public class SimpleSpan extends AbstractAnnotation implements Span{
 				return false;
 		
 		Span s = (Span) obj;
-		return Objects.equals(type, s.getType()) && begin == s.getBegin() && end == s.getEnd() && Objects.equals(properties, s.getProperties()); 
+		return Objects.equals(type, s.getType().orElseGet(null)) && begin == s.getBegin() && end == s.getEnd() && Objects.equals(properties, s.getProperties()); 
 	}
 	
 	@Override
